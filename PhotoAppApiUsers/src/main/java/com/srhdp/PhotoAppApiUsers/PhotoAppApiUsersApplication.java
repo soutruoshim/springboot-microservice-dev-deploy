@@ -18,4 +18,9 @@ public class PhotoAppApiUsersApplication {
 		return new BCryptPasswordEncoder();
 	}
 
+//	@Bean
+//	public HttpExchangeRepository httpTraceRepository() {
+//		return new InMemoryHttpExchangeRepository();
+//	}
+
 }
