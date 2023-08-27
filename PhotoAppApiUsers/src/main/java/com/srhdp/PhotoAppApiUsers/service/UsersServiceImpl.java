@@ -8,11 +8,12 @@ import com.srhdp.PhotoAppApiUsers.shared.UserDto;
 import com.srhdp.PhotoAppApiUsers.ui.model.AlbumResponseModel;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,7 +32,7 @@ public class UsersServiceImpl implements UsersService {
     //RestTemplate restTemplate;
     AlbumsServiceClient albumsServiceClient;
     Environment environment;
-
+    Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     public UsersServiceImpl(UsersRepository usersRepository, BCryptPasswordEncoder bCryptPasswordEncoder, AlbumsServiceClient albumsServiceClient, Environment environment) {
         this.usersRepository = usersRepository;
@@ -79,7 +80,10 @@ public class UsersServiceImpl implements UsersService {
 //        });
 //        List<AlbumResponseModel> albumsList = albumsListResponse.getBody();
 
+        logger.debug("Before calling albums Microservice");
         List<AlbumResponseModel> albumsList = albumsServiceClient.getAlbums(userId);
+        logger.debug("After calling albums Microservice");
+
         userDto.setAlbums(albumsList);
 
         return userDto;
