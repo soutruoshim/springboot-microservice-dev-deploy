@@ -62,6 +62,8 @@ public class WebSecurity {
 
         http.authorizeHttpRequests()
                 .antMatchers("/users").permitAll()
+                .antMatchers("/actuator/health").permitAll()
+                .antMatchers("/actuator/circuitbreakerevents").permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
                 .and()
                 .addFilter(authenticationFilter)
